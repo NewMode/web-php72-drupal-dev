@@ -1,8 +1,12 @@
+# https://circleci.com/blog/circleci-config-teardown-how-we-write-our-circleci-config-at-circleci/
 version: 2
 jobs:
   build:
-    machine: true
+    working_directory: .
+    docker:
+      - image: docker
     steps:
       - checkout
+      - setup_remote_docker
       - run: ./docker_build.sh
 
