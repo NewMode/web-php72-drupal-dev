@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    environment:
+      CR_SERVER=013331499282.dkr.ecr.ca-central-1.amazonaws.com
+      IMAGE=ctc/web-php72-dev
+
+      DOCKER: bar
+    machine: true
+
+    steps:
+      - checkout
+      - run: ./docker_build.sh
+
