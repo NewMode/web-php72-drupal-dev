@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# $CI_COMMIT_SHA
+# Gitlab uses $CI_COMMIT_SHA, CircleCI uses $CIRCLE_SHA1
 
 if [ -z "$CIRCLE_SHA1" ]; then
   echo "env: \$CIRCLE_SHA1 is expected (the commit hash from repo)"
@@ -32,7 +32,7 @@ if [ $ret -ne 0 ]; then
 fi
 
 # tag and push using specific tag
-if [ "$CI_COMMIT_SHA" != "" ]; then
+if [ "$CIRCLE_SHA1" != "" ]; then
     # tagging & pushing
     docker tag $CR_SERVER/$IMAGE:latest $CR_SERVER/$IMAGE:$CIRCLE_SHA1
     docker push $CR_SERVER/$IMAGE:$CIRCLE_SHA1
