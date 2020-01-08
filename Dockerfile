@@ -20,12 +20,14 @@ RUN apt-get update && apt-get install -y mysql-client
 RUN docker-php-ext-install pdo_mysql
 
 # Enable GD (with jpeg and freetype support)
+# Remove dev packages after build.
 RUN apt-get update \
     && apt-get install -y libgd2-xpm-dev* libfreetype6-dev libjpeg62-turbo-dev libpng-dev libz-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
     && docker-php-ext-install opcache \
-    && docker-php-ext-install bcmath
+    && docker-php-ext-install bcmath \
+    && apt-get –-purge remove -y libgd2-xpm-dev* libfreetype6-dev libjpeg62-turbo-dev libpng-dev libz-dev
 
 RUN pecl install redis && docker-php-ext-enable redis
 
@@ -64,7 +66,8 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y yarn
 
 RUN apt-get update && apt-get install -qq -y libicu-dev \
-    && docker-php-ext-install intl
+    && docker-php-ext-install intl \
+    && apt-get –-purge remove -y libicu-dev
 
 # NODEJS NVM ---------------------------------------------------------------------------------------------------------------
 ARG NODE_VERSION=6.17.1

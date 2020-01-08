@@ -13,6 +13,8 @@ CR_SERVER=144447806810.dkr.ecr.ca-central-1.amazonaws.com
 IMAGE=newmode/web-php72-drupal-dev
 
 docker build --no-cache --pull -t $IMAGE .
+# Switch to this build command on local if you need faster rebuild.
+#docker build --pull -t $IMAGE .
 
 ret=$?
 if [ $ret -ne 0 ]; then
