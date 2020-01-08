@@ -1,5 +1,8 @@
-FROM php:7.2-apache-stretch
+FROM drupal:8
 LABEL maintainer="yi-yang-github"
+
+# Remove the Drupal core coming from the image, as we'll mount it from local.
+RUN rm -rf /var/www/html/*
 
 COPY config/php.ini /usr/local/etc/php/
 
@@ -19,15 +22,7 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y mysql-client
 RUN docker-php-ext-install pdo_mysql
 
-# Enable GD (with jpeg and freetype support)
-# Remove dev packages after build.
-RUN apt-get update \
-    && apt-get install -y libgd2-xpm-dev* libfreetype6-dev libjpeg62-turbo-dev libpng-dev libz-dev \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install opcache \
-    && docker-php-ext-install bcmath \
-    && apt-get purge -y libgd2-xpm-dev* libfreetype6-dev libjpeg62-turbo-dev libpng-dev libz-dev
+# Switched to official Drupal image, which comes with GD.
 
 RUN pecl install redis && docker-php-ext-enable redis
 
