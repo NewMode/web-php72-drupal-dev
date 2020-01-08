@@ -27,7 +27,7 @@ RUN apt-get update \
     && docker-php-ext-install gd \
     && docker-php-ext-install opcache \
     && docker-php-ext-install bcmath \
-    && apt-get –-purge remove -y libgd2-xpm-dev* libfreetype6-dev libjpeg62-turbo-dev libpng-dev libz-dev
+    && apt-get remove –-purge -y libgd2-xpm-dev* libfreetype6-dev libjpeg62-turbo-dev libpng-dev libz-dev
 
 RUN pecl install redis && docker-php-ext-enable redis
 
@@ -67,7 +67,7 @@ RUN apt-get update && apt-get install -y yarn
 
 RUN apt-get update && apt-get install -qq -y libicu-dev \
     && docker-php-ext-install intl \
-    && apt-get –-purge remove -y libicu-dev
+    && apt-get remove –-purge -y libicu-dev
 
 # NODEJS NVM ---------------------------------------------------------------------------------------------------------------
 ARG NODE_VERSION=6.17.1
